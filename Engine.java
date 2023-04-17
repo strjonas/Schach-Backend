@@ -27,7 +27,7 @@ public class Engine {
     ) {
         Runtime runTime = Runtime.getRuntime();
         String executablePath = "C:\\Users\\MarkMark\\IdeaProjects\\stockfish_15.1_win_x64_popcnt\\stockfish-windows-2022-x86-64-modern.exe";
-
+//creates a process that runs Stockfish, a Reader and a Writer that are used to interact with it.
         try {
             this.process = runTime.exec(executablePath);
             this.reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -36,6 +36,7 @@ public class Engine {
             e.printStackTrace();
         }
     }
+    // MEthod for closing the process the Reader and the Writer
     public void close() {
         if (this.process.isAlive()) {
             this.process.destroy();
@@ -50,10 +51,6 @@ public class Engine {
     public <T> T command(String cmd, Function<List<String>, T> commandProcessor, Predicate<String> breakCondition, long timeout)
             throws InterruptedException, ExecutionException, TimeoutException {
 
-        // This completable future will send a command to the process
-        // And gather all the output of the engine in the List<String>
-        // At the end, the List<String> is translated to T through the
-        // commandProcessor Function
         CompletableFuture<T> command = supplyAsync(() -> {
             final List<String> output = new ArrayList<>();
             try {
@@ -89,16 +86,16 @@ public class Engine {
 
     public Engine() { }
 
-    // -----
+    // A test
     public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
         Engine engine = new Engine();
         engine.start();
-        var position = "8/8/4Rp2/5P2/1PP1pkP1/7P/1P1r4/7K b - - 0 40";
-        engine.command("uci", identity(), (s) -> s.startsWith("uciok"), 2000L);
-        engine.command("position fen " + position, identity(), s -> s.startsWith("readyok"), 2000L);
+        var position = "8/8/4Rp2/5P2/1PP1pkP1/7P/1P1r4/7K b - - 0 40"; //fenstring, a weird chess notation
+        engine.command("uci", identity(), (s) -> s.startsWith("uciok"), 2000L);//starts engine with uci command
+        engine.command("position fen " + position, identity(), s -> s.startsWith("readyok"), 2000L);//uses the fenstring
 
         String bestMove = engine.command(
-                        "go movetime 3000",
+                        "go movetime 3000", // searches the best move in 3 seconds
                         lines -> lines.stream().filter(s->s.startsWith("bestmove")).findFirst().get(),
                         line -> line.startsWith("bestmove"),
                         5000L)
