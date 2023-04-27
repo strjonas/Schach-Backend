@@ -6,7 +6,7 @@ public class Queen extends Pieces{
         return true;
     }
 
-    private boolean isQueenMovewment(int posY, int posX, int newPosY, int newPosX){
+    private boolean isQueenMovement(int posY, int posX, int newPosY, int newPosX){
         return (Math.abs(newPosX-posX) == Math.abs(newPosY-posY) )||
                 ((posY == newPosY && posX != newPosX) || (posY != newPosY && posX == newPosX));
     }
