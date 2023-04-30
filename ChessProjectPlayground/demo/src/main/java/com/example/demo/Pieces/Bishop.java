@@ -3,7 +3,7 @@ package com.example.demo.Pieces;
 import com.example.demo.Board;
 
 public class Bishop extends Pieces {
-/*
+
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board) {
         return isBishopMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(posY, posX, newPosY, newPosX, board);
     }
@@ -16,7 +16,7 @@ public class Bishop extends Pieces {
         int stepX = (newPosX-posX)/Math.abs(newPosX-posX);
         int stepY = (newPosY-posY)/Math.abs(newPosY-posY);
         while (posX != newPosX) {
-            if (board[posY][posX].isEmpty()) {
+            if (board.isEmpty(newPosY,newPosX)) {
                 posX += stepX;
                 posY += stepY;
             } else return false;
@@ -24,5 +24,5 @@ public class Bishop extends Pieces {
         return true;
     }
 
- */
+
 }

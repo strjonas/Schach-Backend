@@ -15,5 +15,9 @@ public class Board {
     public void setBoard(Pieces[][] board) {
         this.board = board;
     }
+
+    public boolean isEmpty( int newPosY, int newPosX){
+        return board[newPosY][newPosX] == null;
+    }
 }
 

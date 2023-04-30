@@ -8,7 +8,7 @@ public class Pieces {
         return isBlack;
     }
 
-    public boolean outOfBoundsOrSame(int posY, int posX, int newPosY, int newPosX){
+    public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX){
         return newPosY <8 && newPosX <8 && !(newPosX == posX && newPosY == posY);
 
     }
