@@ -1,7 +1,9 @@
 package com.example.demo.Pieces;
 
-public class Bishop extends Pieces {
+import com.example.demo.Board;
 
+public class Bishop extends Pieces {
+/*
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board) {
         return isBishopMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(posY, posX, newPosY, newPosX, board);
     }
@@ -21,4 +23,6 @@ public class Bishop extends Pieces {
         }
         return true;
     }
+
+ */
 }

@@ -1,6 +1,7 @@
 package com.example.demo.Pieces;
 
 public class Pawn extends Pieces {
+   /*
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX) {
         isPawnMovement(posY, posX, newPosY, newPosX);
         return true;
@@ -60,4 +61,6 @@ public class Pawn extends Pieces {
         }
         return false;
     }
+
+    */
 }

@@ -1,3 +1,4 @@
+
 package com.example.demo;
 import com.example.demo.Pieces.*;
 
@@ -15,5 +16,4 @@ public class Board {
         this.board = board;
     }
 }
-
 

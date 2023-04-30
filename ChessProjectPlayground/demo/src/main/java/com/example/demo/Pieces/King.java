@@ -3,7 +3,7 @@ package com.example.demo.Pieces;
 public class King extends Pieces{
     private boolean canCastleQ;
     private boolean canCastleK;
-
+/*
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board){
         return super.isMoveValid() && isKingMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(newPosY, newPosX, board);
     }
@@ -19,4 +19,6 @@ public class King extends Pieces{
     private boolean isCastleValid(int posY, int posX, int newPosY, int newPosX, Board board) {
         //todo ( newPosX-posX > 0 ? canCastleK : canCastleQ)
     }
+    */
+
 }
