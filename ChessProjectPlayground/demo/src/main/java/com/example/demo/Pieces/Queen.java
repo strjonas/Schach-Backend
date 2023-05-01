@@ -3,7 +3,7 @@ package com.example.demo.Pieces;
 public class Queen extends Pieces{
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX){
 
-        return true;
+        return super.isMoveValid(posY, posX, newPosY, newPosX) && isQueenMovement(posY,posX,newPosY,newPosX);
     }
 
     private boolean isQueenMovement(int posY, int posX, int newPosY, int newPosX){

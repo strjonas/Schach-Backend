@@ -2,7 +2,7 @@ package com.example.demo.Pieces;
 
 public class Knight extends Pieces {
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX) {
-    return isKnightMovement(posY,posX,newPosY,newPosX);
+    return super.isMoveValid(posY, posX, newPosY, newPosX) && isKnightMovement(posY,posX,newPosY,newPosX);
     }
 
     public boolean isKnightMovement(int posY, int posX, int newPosY, int newPosX){

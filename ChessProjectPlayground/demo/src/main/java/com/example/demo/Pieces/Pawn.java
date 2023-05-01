@@ -1,13 +1,15 @@
 package com.example.demo.Pieces;
 
+import com.example.demo.Board;
+
 public class Pawn extends Pieces {
-   /*
-    public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX) {
-        isPawnMovement(posY, posX, newPosY, newPosX);
-        return true;
+
+    public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board) {
+         return super.isMoveValid(posY, posX, newPosY, newPosX) && isPawnMovement(posY, posX, newPosY, newPosX, board);
+
     }
 
-    private boolean isPawnMovement(int posY, int posX, int newPosY, int newPosX) {
+    private boolean isPawnMovement(int posY, int posX, int newPosY, int newPosX, Board board) {
         if (getIsBlack()) {
             if (posX == newPosX) {
                 switch (posY) {
@@ -49,7 +51,7 @@ public class Pawn extends Pieces {
         if (newPosX == posX) {
 
             while (posY != newPosY) {
-                if (board[posY][posX].isEmpty()) {
+                if (board.isEmpty(newPosY, newPosX)) {
                     posY += stepY;
                 }else{
                     return false;
@@ -57,10 +59,10 @@ public class Pawn extends Pieces {
             }
         }
         else if((newPosY-posY)*stepY == 1 && Math.abs(newPosX-posX) == 1){
-            return !board[posY][posX].isEmpty();
+            return !board.isEmpty(newPosY, newPosX);
         }
         return false;
     }
 
-    */
+
 }

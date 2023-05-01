@@ -5,7 +5,7 @@ import com.example.demo.Board;
 public class Bishop extends Pieces {
 
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board) {
-        return isBishopMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(posY, posX, newPosY, newPosX, board);
+        return super.isMoveValid(posY, posX, newPosY, newPosX) && isBishopMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(posY, posX, newPosY, newPosX, board);
     }
 
     private boolean isBishopMovement(int posY, int posX, int newPosY, int newPosX) {
