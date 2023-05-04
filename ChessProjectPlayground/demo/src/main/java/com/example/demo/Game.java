@@ -1,28 +1,45 @@
+
 package com.example.demo;
 
 
 import com.example.demo.Pieces.*;
 
+import java.util.UUID;
+
 public class Game {
-    private static Board board = new Board();
+    private Board board;
+    private final  String gameId;
 
-   public static void boardStarter(){
-       Pieces[][] newBoard = new Pieces[8][8];
-       newBoard[0][0] = new Rook();
-       newBoard[0][1] = new Knight();
-       newBoard[0][2] = new Bishop();
-       newBoard[0][3] = new Queen();
-       newBoard[0][4] = new King();
-       newBoard[0][5] = new Bishop();
-       newBoard[0][6] = new Knight();
-       newBoard[0][7] = new Rook();
-       board.setBoard(newBoard);
+    public Game() {
+        this.gameId = UUID.randomUUID().toString();
+        this.board = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/R3K2R"); // "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
+    }
 
+    public String getGameId() {
+        return gameId;
+    }
 
+    public Board getBoard() {
+
+        return board;
+    }
+
+    public void setBoard(Board board) {
+
+        this.board = board;
+    }
+
+    public void boardStarter() {
    }
 
 
     public static void main(String[] args) {
+        Game game = new Game();
+        System.out.println(game.board.getBoard()[0][0].getIsBlack());
     }
 
 }
+
+
+
+
