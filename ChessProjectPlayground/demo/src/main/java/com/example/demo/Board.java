@@ -93,6 +93,7 @@ public class Board {
         return board[newPosY][newPosX] == null;
     }
 
+
     @Override
     public String toString() {
         return "Board{" +
