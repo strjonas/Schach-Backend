@@ -12,8 +12,25 @@ public class King extends Pieces {
         canCastleQ = true;
     }
 
+    public boolean isCanCastleQ() {
+        return canCastleQ;
+    }
+
+    public void setCanCastleQ(boolean canCastleQ) {
+        this.canCastleQ = canCastleQ;
+    }
+
+    public boolean isCanCastleK() {
+        return canCastleK;
+    }
+
+    public void setCanCastleK(boolean canCastleK) {
+        this.canCastleK = canCastleK;
+    }
+
+    @Override
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board) {
-        return super.isMoveValid(posY, posX, newPosY, newPosX) && isKingMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(newPosY, newPosX, board);
+        return super.isMoveValid(posY, posX, newPosY, newPosX, board) && isKingMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(newPosY, newPosX, board);
     }
 
     private boolean isKingMovement(int posY, int posX, int newPosY, int newPosX) {
@@ -29,11 +46,11 @@ public class King extends Pieces {
         if (newPosX - posX > 0 && canCastleK) {
             //kingside
             //move rook
-            return board.getBoard()[posY][7] instanceof Rook && !((Rook) board.getBoard()[posY][7]).getHasMoved() && board.isEmpty(posY, posX + 1) && board.isEmpty(posY, posX + 2)
+            return board.getChessBoard()[posY][7] instanceof Rook && !((Rook) board.getChessBoard()[posY][7]).getHasMoved() && board.isEmpty(posY, posX + 1) && board.isEmpty(posY, posX + 2)
                     && !isChecked(posY, posX + 1, board, getIsBlack()) && !isChecked(posY, posX + 2, board, getIsBlack());
         } else if (newPosX - posX < 0 && canCastleQ) {
             //move rook
-            return board.getBoard()[posY][0] instanceof Rook && !((Rook) board.getBoard()[posY][0]).getHasMoved() && board.isEmpty(posY, posX - 1) && board.isEmpty(posY, posX - 2)
+            return board.getChessBoard()[posY][0] instanceof Rook && !((Rook) board.getChessBoard()[posY][0]).getHasMoved() && board.isEmpty(posY, posX - 1) && board.isEmpty(posY, posX - 2)
                     && !isChecked(posY, posX - 1, board, getIsBlack()) && !isChecked(posY, posX - 2, board, getIsBlack());
             //queenside
         }
@@ -43,34 +60,35 @@ public class King extends Pieces {
 
     public boolean isChecked(int posY, int posX, Board board, boolean isBlack) {
 
-        return isDiagonallyChecked(posY, posX, board, isBlack) || isHorizontallyOrVerticallyChecked(posY, posX, board, isBlack) || isCheckedByKnight(posY, posX, board, isBlack);
+        return isDiagonallyChecked(posY, posX, board, isBlack) || isHorizontallyOrVerticallyChecked(posY, posX, board, isBlack)
+                || isCheckedByKnight(posY, posX, board, isBlack);
 
 
     }
 
     private boolean isCheckedByKnight(int posY, int posX, Board board, boolean isBlack) {
-        if ((posY + 2 < 8 && posX + 1 < 8) && board.getBoard()[posY + 2][posX + 1] instanceof Knight && board.getBoard()[posY + 2][posX + 1].getIsBlack() != isBlack) {
+        if ((posY + 2 < 8 && posX + 1 < 8) && board.getChessBoard()[posY + 2][posX + 1] instanceof Knight && board.getChessBoard()[posY + 2][posX + 1].getIsBlack() != isBlack) {
             return true;
         }
-        if ((posY + 2 < 8 && posX - 1 >= 0) && board.getBoard()[posY + 2][posX - 1] instanceof Knight && board.getBoard()[posY + 1][posX - 1].getIsBlack() != isBlack) {
+        if ((posY + 2 < 8 && posX - 1 >= 0) && board.getChessBoard()[posY + 2][posX - 1] instanceof Knight && board.getChessBoard()[posY + 1][posX - 1].getIsBlack() != isBlack) {
             return true;
         }
-        if ((posY - 2 >= 0 && posX + 1 < 8) && board.getBoard()[posY - 2][posX + 1] instanceof Knight && board.getBoard()[posY - 2][posX + 1].getIsBlack() != isBlack) {
+        if ((posY - 2 >= 0 && posX + 1 < 8) && board.getChessBoard()[posY - 2][posX + 1] instanceof Knight && board.getChessBoard()[posY - 2][posX + 1].getIsBlack() != isBlack) {
             return true;
         }
-        if ((posY - 2 >= 0 && posX - 1 >= 0) && board.getBoard()[posY - 2][posX - 1] instanceof Knight && board.getBoard()[posY - 2][posX - 1].getIsBlack() != isBlack) {
+        if ((posY - 2 >= 0 && posX - 1 >= 0) && board.getChessBoard()[posY - 2][posX - 1] instanceof Knight && board.getChessBoard()[posY - 2][posX - 1].getIsBlack() != isBlack) {
             return true;
         }
-        if ((posY + 1 < 8 && posX + 2 < 8) && board.getBoard()[posY + 1][posX + 2] instanceof Knight && board.getBoard()[posY + 1][posX + 2].getIsBlack() != isBlack) {
+        if ((posY + 1 < 8 && posX + 2 < 8) && board.getChessBoard()[posY + 1][posX + 2] instanceof Knight && board.getChessBoard()[posY + 1][posX + 2].getIsBlack() != isBlack) {
             return true;
         }
-        if ((posY + 1 < 8 && posX - 2 >= 0) && board.getBoard()[posY + 1][posX - 2] instanceof Knight && board.getBoard()[posY + 1][posX - 2].getIsBlack() != isBlack) {
+        if ((posY + 1 < 8 && posX - 2 >= 0) && board.getChessBoard()[posY + 1][posX - 2] instanceof Knight && board.getChessBoard()[posY + 1][posX - 2].getIsBlack() != isBlack) {
             return true;
         }
-        if ((posY - 1 >= 0 && posX + 2 < 8) && board.getBoard()[posY - 1][posX + 2] instanceof Knight && board.getBoard()[posY - 1][posX + 2].getIsBlack() != isBlack) {
+        if ((posY - 1 >= 0 && posX + 2 < 8) && board.getChessBoard()[posY - 1][posX + 2] instanceof Knight && board.getChessBoard()[posY - 1][posX + 2].getIsBlack() != isBlack) {
             return true;
         }
-        return (posY - 1 >= 0 && posX - 2 >= 0) && board.getBoard()[posY - 1][posX - 2] instanceof Knight && board.getBoard()[posY - 1][posX - 2].getIsBlack() != isBlack;
+        return (posY - 1 >= 0 && posX - 2 >= 0) && board.getChessBoard()[posY - 1][posX - 2] instanceof Knight && board.getChessBoard()[posY - 1][posX - 2].getIsBlack() != isBlack;
     }
 
     private boolean isDiagonallyChecked(int posY, int posX, Board board, boolean isBlack) {
@@ -83,52 +101,52 @@ public class King extends Pieces {
         while (i < 7) {
             if (!isBlack) {
                 if ((posY + i < 8 && posX + i < 8) && (posY + 1 == posY + i) &&
-                        ((board.getBoard()[posY + i][posX - 1] instanceof Pawn && board.getBoard()[posY + i][posX - 1].getIsBlack()) ||
-                                (board.getBoard()[posY + i][posX + 1] instanceof Pawn && board.getBoard()[posY + i][posX - 1].getIsBlack()))) {
+                        ((board.getChessBoard()[posY + i][posX - 1] instanceof Pawn && board.getChessBoard()[posY + i][posX - 1].getIsBlack()) ||
+                                (board.getChessBoard()[posY + i][posX + 1] instanceof Pawn && board.getChessBoard()[posY + i][posX - 1].getIsBlack()))) {
                     return true;
                 }
             } else {
                 if ((posY - i >= 0 && posX - i >= 0) && (posY - 1 == posY - i) &&
-                        ((board.getBoard()[posY - i][posX - 1] instanceof Pawn && !board.getBoard()[posY - i][posX - 1].getIsBlack()) ||
-                                (board.getBoard()[posY - i][posX + 1] instanceof Pawn && !board.getBoard()[posY - i][posX - 1].getIsBlack()))) {
+                        ((board.getChessBoard()[posY - i][posX - 1] instanceof Pawn && !board.getChessBoard()[posY - i][posX - 1].getIsBlack()) ||
+                                (board.getChessBoard()[posY - i][posX + 1] instanceof Pawn && !board.getChessBoard()[posY - i][posX - 1].getIsBlack()))) {
                     return true;
                 }
             }
 
 
-            if (!plusplus && (posY + i < 8 && posX + i < 8) && board.getBoard()[posY + i][posX + i] != null) {
+            if (!plusplus && (posY + i < 8 && posX + i < 8) && board.getChessBoard()[posY + i][posX + i] != null) {
                 if ((isQueenOrBishop(posY + i, posX + i, board)
-                        || (i == 1 && board.getBoard()[posY + i][posX + i] instanceof King))
-                        && board.getBoard()[posY + i][posX + i].getIsBlack() != isBlack) {
+                        || (i == 1 && board.getChessBoard()[posY + i][posX + i] instanceof King))
+                        && board.getChessBoard()[posY + i][posX + i].getIsBlack() != isBlack) {
                     return true;
                 } else {
                     plusplus = true;
                 }
             }
 
-            if (!minusplus && (posY - i >= 0 && posX + i < 8) && board.getBoard()[posY - i][posX + i] != null) {
+            if (!minusplus && (posY - i >= 0 && posX + i < 8) && board.getChessBoard()[posY - i][posX + i] != null) {
                 if ((isQueenOrBishop(posY - 1, posX - 1, board)
-                        || (i == 1 && board.getBoard()[posY - i][posX + i] instanceof King))
-                        && board.getBoard()[posY - i][posX + i].getIsBlack() != isBlack) {
+                        || (i == 1 && board.getChessBoard()[posY - i][posX + i] instanceof King))
+                        && board.getChessBoard()[posY - i][posX + i].getIsBlack() != isBlack) {
                     return true;
                 } else {
                     minusplus = true;
                 }
             }
 
-            if (!plusminus && (posY + i < 8 && posX - i >= 0) && board.getBoard()[posY + i][posX - i] != null) {
+            if (!plusminus && (posY + i < 8 && posX - i >= 0) && board.getChessBoard()[posY + i][posX - i] != null) {
                 if ((isQueenOrBishop(posY + 1, posX - 1, board)
-                        || (i == 1 && board.getBoard()[posY + i][posX - i] instanceof King))
-                        && board.getBoard()[posY + i][posX - i].getIsBlack() != isBlack) {
+                        || (i == 1 && board.getChessBoard()[posY + i][posX - i] instanceof King))
+                        && board.getChessBoard()[posY + i][posX - i].getIsBlack() != isBlack) {
                     return true;
                 } else {
                     plusminus = true;
                 }
             }
-            if (!minusminus && (posY - i >= 0 && posX - i >= 0) && board.getBoard()[posY - i][posX - i] != null) {
+            if (!minusminus && (posY - i >= 0 && posX - i >= 0) && board.getChessBoard()[posY - i][posX - i] != null) {
                 if ((isQueenOrBishop(posY - 1, posX - 1, board)
-                        || (i == 1 && board.getBoard()[posY - i][posX - i] instanceof King))
-                        && board.getBoard()[posY - i][posX - i].getIsBlack() != isBlack) {
+                        || (i == 1 && board.getChessBoard()[posY - i][posX - i] instanceof King))
+                        && board.getChessBoard()[posY - i][posX - i].getIsBlack() != isBlack) {
                     return true;
                 } else {
                     minusminus = true;
@@ -147,34 +165,34 @@ public class King extends Pieces {
         boolean isInPositiveXDirection = true;
         for (int i = 1; i < 8; i++) {
             if (isInPositiveXDirection && posX + i < 8 && (isQueenOrRook(posY, posX + 1, board)
-                    || (i == 1 && board.getBoard()[posY][posX + i] instanceof King))
-                    && board.getBoard()[posY][posX + i].getIsBlack() != isBlack) {
+                    || (i == 1 && board.getChessBoard()[posY][posX + i] instanceof King))
+                    && board.getChessBoard()[posY][posX + i].getIsBlack() != isBlack) {
                 return true;
-            } else if (posX + i < 8 && board.getBoard()[posY][posX + i] != null) {
+            } else if (posX + i < 8 && board.getChessBoard()[posY][posX + i] != null) {
                 isInPositiveXDirection = false;
             }
 
             if (isInNegativeXDirection && posX - i >= 0 && (isQueenOrRook(posY, posX - 1, board)
-                    || (i == 1 && board.getBoard()[posY][posX - i] instanceof King))
-                    && board.getBoard()[posY][posX - i].getIsBlack() != isBlack) {
+                    || (i == 1 && board.getChessBoard()[posY][posX - i] instanceof King))
+                    && board.getChessBoard()[posY][posX - i].getIsBlack() != isBlack) {
                 return true;
-            } else if (posX - i >= 0 && board.getBoard()[posY][posX - i] != null) {
+            } else if (posX - i >= 0 && board.getChessBoard()[posY][posX - i] != null) {
                 isInNegativeXDirection = false;
             }
 
             if (isInPositiveYDirection && posY + i < 8 && (isQueenOrRook(posY + 1, posX, board)
-                    || (i == 1 && board.getBoard()[posY + i][posX] instanceof King))
-                    && board.getBoard()[posY + 1][posX].getIsBlack() != isBlack) {
+                    || (i == 1 && board.getChessBoard()[posY + i][posX] instanceof King))
+                    && board.getChessBoard()[posY + 1][posX].getIsBlack() != isBlack) {
                 return true;
-            } else if (posY + i < 8 && board.getBoard()[posY + 1][posX] != null) {
+            } else if (posY + i < 8 && board.getChessBoard()[posY + 1][posX] != null) {
                 isInPositiveYDirection = false;
             }
 
             if (isInNegativeYDirection && posY - i >= 0 && (isQueenOrRook(posY - 1, posX, board)
-                    || (i == 1 && board.getBoard()[posY - i][posX] instanceof King))
-                    && board.getBoard()[posY - 1][posX].getIsBlack() != isBlack) {
+                    || (i == 1 && board.getChessBoard()[posY - i][posX] instanceof King))
+                    && board.getChessBoard()[posY - 1][posX].getIsBlack() != isBlack) {
                 return true;
-            } else if (posY - i >= 0 && board.getBoard()[posY - 1][posX] != null) {
+            } else if (posY - i >= 0 && board.getChessBoard()[posY - 1][posX] != null) {
                 isInNegativeYDirection = false;
             }
 
@@ -186,11 +204,11 @@ public class King extends Pieces {
     }
 
     private boolean isQueenOrRook(int posY, int posX, Board board) {
-        return board.getBoard()[posY][posX] instanceof Queen || board.getBoard()[posY][posX] instanceof Rook;
+        return board.getChessBoard()[posY][posX] instanceof Queen || board.getChessBoard()[posY][posX] instanceof Rook;
     }
 
     private boolean isQueenOrBishop(int posY, int posX, Board board) {
-        return board.getBoard()[posY][posX] instanceof Queen || board.getBoard()[posY][posX] instanceof Bishop;
+        return board.getChessBoard()[posY][posX] instanceof Queen || board.getChessBoard()[posY][posX] instanceof Bishop;
     }
 
 

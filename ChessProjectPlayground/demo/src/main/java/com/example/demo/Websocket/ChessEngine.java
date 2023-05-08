@@ -36,6 +36,7 @@ public class ChessEngine {
             e.printStackTrace();
         }
     }
+
     public void close() {
         if (this.process.isAlive()) {
             this.process.destroy();
@@ -47,6 +48,7 @@ public class ChessEngine {
             e.printStackTrace();
         }
     }
+
     public <T> T command(String cmd, Function<List<String>, T> commandProcessor, Predicate<String> breakCondition, long timeout)
             throws InterruptedException, ExecutionException, TimeoutException {
 
@@ -86,8 +88,8 @@ public class ChessEngine {
     }
 
 
-
-    public ChessEngine() { }
+    public ChessEngine() {
+    }
 
     // -----
     public static String analyse(String position) throws ExecutionException, InterruptedException, TimeoutException {
@@ -99,7 +101,7 @@ public class ChessEngine {
 
         String bestMove = engine.command(
                         "go movetime 3000",
-                        lines -> lines.stream().filter(s->s.startsWith("bestmove")).findFirst().get(),
+                        lines -> lines.stream().filter(s -> s.startsWith("bestmove")).findFirst().get(),
                         line -> line.startsWith("bestmove"),
                         5000L)
                 .split(" ")[1];
