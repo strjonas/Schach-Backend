@@ -16,6 +16,18 @@ public class Queen extends Pieces {
                 ((posY == newPosY && posX != newPosX) || (posY != newPosY && posX == newPosX));
     }
 
+    private boolean isSomethingInTheWay(int posY, int posX, int newPosY, int newPosX, Board board) {
+        int stepX = (newPosX - posX) / (newPosX != posX ? Math.abs(newPosX - posX) : 1);
+        int stepY = (newPosY - posY) / (newPosY != posY ? Math.abs(newPosY - posY) : 1);
+        while (posX != newPosX && posY != newPosY) {
+            if (board.isEmpty(newPosY, newPosX)) {
+                posX += stepX;
+                posY += stepY;
+            } else return false;
+        }
+        return board.isEmpty(newPosY, newPosX) || board.getChessBoard()[newPosY][newPosX].getIsBlack() == !getIsBlack();
+    }
+
     @Override
     public Character toChar() {
         return getIsBlack() ? 'q' : 'Q';

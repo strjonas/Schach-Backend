@@ -20,12 +20,15 @@ public class Board {
         this.chessBoard = chessBoard;
         KING = new Point();
         king = new Point();
+        //set enpassant position after pawnmove, set null after nextmove
     }
 
     //8/8/4Rp2/5P2/1PP1pkP1/7P/1P1r4/7K b - - 0 40
     public Board(String fenstring) {
         KING = new Point();
         king = new Point();
+        enPassant = new Point(4, 5);
+        //set enpassant position after pawnmove, set null after nextmove
         int y = 7;
         int x = 0;
         chessBoard = new Pieces[8][8];
@@ -125,7 +128,12 @@ public class Board {
             }
             fenstring.append(y > 0 ? '/' : ' ');
         }
-        fenstring.append(whitesMove ? 'w' : 'b');
+        fenstring.append(whitesMove ? "w " : "b ")
+                .append(((King) chessBoard[KING.y][KING.x]).isCanCastleQ() ?  "Q" : "")
+                .append(((King) chessBoard[king.y][king.x]).isCanCastleK() ? "k" : "")
+                .append(((King) chessBoard[king.y][king.x]).isCanCastleQ() ? "q" : "")
+                .append(enPassant != null ? " " + ((char) (enPassant.x + 'a')) + ((char) (enPassant.y + '1')) : " -")
+                .append(" " + halfMoveCounter + " " + moveCounter);
         //fenstring = new StringBuilder((String) fenstring.subSequence(0, fenstring.length() - 1));
         //System.out.println(fenstring);
         return fenstring.toString();

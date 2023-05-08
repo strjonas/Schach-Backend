@@ -27,6 +27,9 @@ public class Bishop extends Pieces {
                 posY += stepY;
             } else return false;
         }
+        if (board.getChessBoard()[newPosY][newPosX] != null) {
+            return board.getChessBoard()[newPosY][newPosX].getIsBlack() == !getIsBlack();
+        }
         return true;
     }
 

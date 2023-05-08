@@ -3,8 +3,8 @@ package com.example.demo.Pieces;
 import com.example.demo.Board;
 
 public class King extends Pieces {
-    private final boolean canCastleQ;
-    private final boolean canCastleK;
+    private boolean canCastleQ;
+    private boolean canCastleK;
 
     public King(boolean isBlack) {
         super(isBlack);
@@ -42,19 +42,17 @@ public class King extends Pieces {
     }
 
     public boolean isCastleValid(int posY, int posX, int newPosX, Board board) {
-        // todo !!!!!!!!!
-        if (newPosX - posX > 0 && canCastleK) {
+        if (newPosX - posX > 0 && canCastleK && !isChecked(posY, posX, board, getIsBlack())) {
             //kingside
             //move rook
             return board.getChessBoard()[posY][7] instanceof Rook && !((Rook) board.getChessBoard()[posY][7]).getHasMoved() && board.isEmpty(posY, posX + 1) && board.isEmpty(posY, posX + 2)
                     && !isChecked(posY, posX + 1, board, getIsBlack()) && !isChecked(posY, posX + 2, board, getIsBlack());
-        } else if (newPosX - posX < 0 && canCastleQ) {
+        } else if (newPosX - posX < 0 && canCastleQ && !isChecked(posY, posX + 2, board, getIsBlack())) {
             //move rook
             return board.getChessBoard()[posY][0] instanceof Rook && !((Rook) board.getChessBoard()[posY][0]).getHasMoved() && board.isEmpty(posY, posX - 1) && board.isEmpty(posY, posX - 2)
                     && !isChecked(posY, posX - 1, board, getIsBlack()) && !isChecked(posY, posX - 2, board, getIsBlack());
             //queenside
         }
-        //todo ( newPosX-posX > 0 ? canCastleK : canCastleQ)
         return false;
     }
 

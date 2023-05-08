@@ -8,6 +8,7 @@ public class Pawn extends Pieces {
         super(black);
     }
 
+    @Override
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board) {
         return super.isMoveValid(posY, posX, newPosY, newPosX, board) && isPawnMovement(posY, posX, newPosY, newPosX, board);
 
