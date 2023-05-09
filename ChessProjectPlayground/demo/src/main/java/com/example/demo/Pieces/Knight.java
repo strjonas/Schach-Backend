@@ -16,7 +16,7 @@ public class Knight extends Pieces {
 
     private boolean isSomethingInTheWay( int newPosY, int newPosX, Board board) {
         if(!board.isEmpty(newPosY,newPosX)){
-            return board.getChessBoard()[newPosY][newPosX].getIsBlack() == !getIsBlack();
+            return board.getChessBoard()[newPosY][newPosX].getIsBlack() == !isBlack;
         }
         return  true;
     }

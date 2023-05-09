@@ -3,7 +3,7 @@ package com.example.demo.Pieces;
 import com.example.demo.Board;
 
 public class Pieces {
-    private boolean isBlack;
+    boolean isBlack;
 
     public Pieces(boolean black) {
         isBlack = black;

@@ -142,8 +142,9 @@ public class Board {
     public boolean moveValidation(int posY, int posX, int newPosY, int newPosX){
         return chessBoard[posY][posX].isMoveValid(posY,posX,newPosY,newPosX,this);
     }
-    public void moveAPiece(){
-
+    public void moveAPiece(int posY, int posX, int newPosY, int newPosX){
+        this.chessBoard[newPosY][newPosX] = this.chessBoard[posY][posX];
+        this.chessBoard[posY][posX] = null;
     }
 }
 

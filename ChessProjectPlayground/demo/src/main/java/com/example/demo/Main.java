@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.Pieces.Pawn;
+
 import static java.lang.Character.isUpperCase;
 
 
@@ -21,7 +23,13 @@ public class Main {
          */
         System.out.println((char) (3+'1'));
         System.out.println(game.getBoard().toFenString());
-        System.out.println( game.getBoard().getChessBoard()[0][0].isMoveValid(0,0,0,8, game.getBoard()));
+        System.out.println( game.getBoard().getChessBoard()[0][1].isMoveValid(6,5,7,8, game.getBoard()));
+
+        game.getBoard().getChessBoard()[3][4] = new Pawn(false);
+        System.out.println(game.getBoard().getChessBoard()[3][4]);
+        game.makeAMove("e2e4");
+        System.out.println(game.getBoard().getChessBoard()[3][4]);
+        System.out.println(game.getBoard().getChessBoard()[1][4]);
 
         //System.out.println( (((King) board.getBoard()[0][4]).isChecked(0,4, board,  board.getBoard()[0][4].getIsBlack())));
     }

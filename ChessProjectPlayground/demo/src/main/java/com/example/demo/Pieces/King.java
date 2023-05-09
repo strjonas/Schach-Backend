@@ -30,7 +30,7 @@ public class King extends Pieces {
 
     @Override
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board) {
-        return super.isMoveValid(posY, posX, newPosY, newPosX, board) && isKingMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(newPosY, newPosX, board);
+        return super.isMoveValid(posY, posX, newPosY, newPosX, board) && isKingMovement(posY, posX, newPosY, newPosX) && isSomethingInTheWay(newPosY, newPosX, board) && !isChecked(newPosY,newPosX,board);
     }
 
     private boolean isKingMovement(int posY, int posX, int newPosY, int newPosX) {
@@ -38,33 +38,36 @@ public class King extends Pieces {
     }
 
     private boolean isSomethingInTheWay(int newPosY, int newPosX, Board board) {
-        return board.isEmpty(newPosY, newPosX);
+        if (board.getChessBoard()[newPosY][newPosX] != null) {
+            return board.getChessBoard()[newPosY][newPosX].getIsBlack() == !getIsBlack();
+        }
+        return true;
     }
 
     public boolean isCastleValid(int posY, int posX, int newPosX, Board board) {
-        if (newPosX - posX > 0 && canCastleK && !isChecked(posY, posX, board, getIsBlack())) {
+        if (newPosX - posX > 0 && canCastleK && !isChecked(posY, posX, board)) {
             //kingside
             //move rook
             return board.getChessBoard()[posY][7] instanceof Rook && !((Rook) board.getChessBoard()[posY][7]).getHasMoved() && board.isEmpty(posY, posX + 1) && board.isEmpty(posY, posX + 2)
-                    && !isChecked(posY, posX + 1, board, getIsBlack()) && !isChecked(posY, posX + 2, board, getIsBlack());
-        } else if (newPosX - posX < 0 && canCastleQ && !isChecked(posY, posX + 2, board, getIsBlack())) {
+                    && !isChecked(posY, posX + 1, board) && !isChecked(posY, posX + 2, board);
+        } else if (newPosX - posX < 0 && canCastleQ && !isChecked(posY, posX + 2, board)) {
             //move rook
             return board.getChessBoard()[posY][0] instanceof Rook && !((Rook) board.getChessBoard()[posY][0]).getHasMoved() && board.isEmpty(posY, posX - 1) && board.isEmpty(posY, posX - 2)
-                    && !isChecked(posY, posX - 1, board, getIsBlack()) && !isChecked(posY, posX - 2, board, getIsBlack());
+                    && !isChecked(posY, posX - 1, board) && !isChecked(posY, posX - 2, board);
             //queenside
         }
         return false;
     }
 
-    public boolean isChecked(int posY, int posX, Board board, boolean isBlack) {
+    public boolean isChecked(int posY, int posX, Board board) {
 
-        return isDiagonallyChecked(posY, posX, board, isBlack) || isHorizontallyOrVerticallyChecked(posY, posX, board, isBlack)
-                || isCheckedByKnight(posY, posX, board, isBlack);
+        return isDiagonallyChecked(posY, posX, board) || isHorizontallyOrVerticallyChecked(posY, posX, board)
+                || isCheckedByKnight(posY, posX, board);
 
 
     }
 
-    private boolean isCheckedByKnight(int posY, int posX, Board board, boolean isBlack) {
+    private boolean isCheckedByKnight(int posY, int posX, Board board ) {
         if ((posY + 2 < 8 && posX + 1 < 8) && board.getChessBoard()[posY + 2][posX + 1] instanceof Knight && board.getChessBoard()[posY + 2][posX + 1].getIsBlack() != isBlack) {
             return true;
         }
@@ -89,7 +92,7 @@ public class King extends Pieces {
         return (posY - 1 >= 0 && posX - 2 >= 0) && board.getChessBoard()[posY - 1][posX - 2] instanceof Knight && board.getChessBoard()[posY - 1][posX - 2].getIsBlack() != isBlack;
     }
 
-    private boolean isDiagonallyChecked(int posY, int posX, Board board, boolean isBlack) {
+    private boolean isDiagonallyChecked(int posY, int posX, Board board) {
         int i = 1;
         boolean plusplus = false;
         boolean plusminus = false;
@@ -156,7 +159,7 @@ public class King extends Pieces {
     }
 
 
-    private boolean isHorizontallyOrVerticallyChecked(int posY, int posX, Board board, boolean isBlack) {
+    private boolean isHorizontallyOrVerticallyChecked(int posY, int posX, Board board) {
         boolean isInPositiveYDirection = true;
         boolean isInNegativeYDirection = true;
         boolean isInNegativeXDirection = true;

@@ -10,12 +10,12 @@ public class Pawn extends Pieces {
 
     @Override
     public boolean isMoveValid(int posY, int posX, int newPosY, int newPosX, Board board) {
-        return super.isMoveValid(posY, posX, newPosY, newPosX, board) && isPawnMovement(posY, posX, newPosY, newPosX, board);
+        return super.isMoveValid(posY, posX, newPosY, newPosX, board) && isPawnMovement(posY, posX, newPosY, newPosX, board) && isSomethingInTheWay(posY, posX, newPosY, newPosX, board);
 
     }
 
     private boolean isPawnMovement(int posY, int posX, int newPosY, int newPosX, Board board) {
-        if (getIsBlack()) {
+        if (isBlack) {
             if (posX == newPosX) {
                 switch (posY) {
                     case 6 -> {
@@ -57,7 +57,7 @@ public class Pawn extends Pieces {
         }
         if (newPosX == posX) {
 
-            while (posY != newPosY) {
+            while (posY <= newPosY) {
                 if (board.isEmpty(newPosY, newPosX)) {
                     posY += stepY;
                 } else {
