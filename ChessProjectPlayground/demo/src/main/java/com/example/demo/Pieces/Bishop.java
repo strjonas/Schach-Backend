@@ -18,11 +18,14 @@ public class Bishop extends Pieces {
         return Math.abs(newPosX - posX) == Math.abs(newPosY - posY);
     }
 
-    private boolean isSomethingInTheWay(int posY, int posX, int newPosY, int newPosX, Board board) {
+    @Override
+    boolean isSomethingInTheWay(int posY, int posX, int newPosY, int newPosX, Board board) {
         int stepX = (newPosX - posX) / Math.abs(newPosX - posX);
         int stepY = (newPosY - posY) / Math.abs(newPosY - posY);
+        posX += stepX;
+        posY += stepY;
         while (posX != newPosX) {
-            if (board.isEmpty(newPosY, newPosX)) {
+            if (board.isEmpty(posY, posX)) {
                 posX += stepX;
                 posY += stepY;
             } else return false;

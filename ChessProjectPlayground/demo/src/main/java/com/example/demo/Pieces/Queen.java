@@ -15,12 +15,14 @@ public class Queen extends Pieces {
         return (Math.abs(newPosX - posX) == Math.abs(newPosY - posY)) ||
                 ((posY == newPosY && posX != newPosX) || (posY != newPosY && posX == newPosX));
     }
-
-    private boolean isSomethingInTheWay(int posY, int posX, int newPosY, int newPosX, Board board) {
+    @Override
+    public boolean isSomethingInTheWay(int posY, int posX, int newPosY, int newPosX, Board board) {
         int stepX = (newPosX - posX) / (newPosX != posX ? Math.abs(newPosX - posX) : 1);
         int stepY = (newPosY - posY) / (newPosY != posY ? Math.abs(newPosY - posY) : 1);
+        posX += stepX;
+        posY += stepY;
         while (posX != newPosX && posY != newPosY) {
-            if (board.isEmpty(newPosY, newPosX)) {
+            if (board.isEmpty(posY, posX)) {
                 posX += stepX;
                 posY += stepY;
             } else return false;

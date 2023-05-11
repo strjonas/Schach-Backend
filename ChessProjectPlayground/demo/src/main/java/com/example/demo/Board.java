@@ -23,6 +23,18 @@ public class Board {
         //set enpassant position after pawnmove, set null after nextmove
     }
 
+    public Board() {
+
+    }
+
+    public static Board copy(Board board){
+        Board newBoard = new Board();
+        newBoard = new Board(board.toFenStringSimple());
+        newBoard.king = board.king;
+        newBoard.KING = board.KING;
+        return newBoard;
+    }
+
     //8/8/4Rp2/5P2/1PP1pkP1/7P/1P1r4/7K b - - 0 40
     public Board(String fenstring) {
         KING = new Point();
@@ -138,11 +150,73 @@ public class Board {
         //System.out.println(fenstring);
         return fenstring.toString();
     }
+    public String toFenStringSimple() {
+        StringBuilder fenstring = new StringBuilder();
+        for (int y = 7; y >= 0; y--) {
+            int emptyCount = 0;
+            for (int x = 0; x < 8; x++) {
+                if (isEmpty(y, x)) {
+                    if (x < 7) {
+                        emptyCount++;
+                    } else {
+                        fenstring.append(++emptyCount);
+                    }
+                } else {
+                    if (emptyCount > 0)
+                        fenstring.append(emptyCount);
+                    fenstring.append(chessBoard[y][x].toChar());
+                    emptyCount = 0;
+                }
+            }
+            fenstring.append(y > 0 ? '/' : ' ');
 
-    public boolean moveValidation(int posY, int posX, int newPosY, int newPosX){
-        return chessBoard[posY][posX].isMoveValid(posY,posX,newPosY,newPosX,this);
+        }
+        return fenstring.toString();
+    }
+
+
+    public boolean moveValidation(int posY, int posX, int newPosY, int newPosX) throws CloneNotSupportedException {
+        //altes piece
+        if(chessBoard[posY][posX].getIsBlack()){
+            if (chessBoard[posY][posX].isMoveValid(posY,posX,newPosY,newPosX,this)) {
+                Board cpy = Board.copy(this);
+                cpy.moveAPiece(posY, posX, newPosY, newPosX);
+
+                return !((King) cpy.getChessBoard()[cpy.get_king().y][cpy.get_king().x]).isChecked(cpy.get_king().y, cpy.get_king().x, cpy);
+            } else return false;
+        }
+        else{
+            if (chessBoard[posY][posX].isMoveValid(posY,posX,newPosY,newPosX,this)) {
+                Board cpy = Board.copy(this);
+                cpy.moveAPiece(posY, posX, newPosY, newPosX);
+                return !((King) cpy.getChessBoard()[cpy.get_KING().y][cpy.get_KING().x]).isChecked(cpy.get_KING().y, cpy.get_KING().x, cpy);
+            } else return false;
+        }
+
     }
     public void moveAPiece(int posY, int posX, int newPosY, int newPosX){
+        //set new king position, lose castle right
+        if (chessBoard[posY][posX] instanceof King) {
+            if (chessBoard[posY][posX].getIsBlack()) {
+                set_king(new Point(newPosX, newPosY));
+            } else {
+                set_KING(new Point(newPosX, newPosY));
+            }
+            ((King) chessBoard[posY][posX]).setCanCastleK(false);
+            ((King) chessBoard[posY][posX]).setCanCastleQ(false);
+        }
+
+        //lose castle right to rook
+        if (chessBoard[posY][posX] instanceof Rook && posX == 0 || posX == 7 && posY == 0 || posY == 7) {
+            //posY == 0 ? ( posX == 0  && ((King) chessBoard[posY][posX]).setCanCastleK(false) ? )
+        }
+
+        //promotion
+        if (chessBoard[posY][posX] instanceof Pawn && (chessBoard[posY][posX].getIsBlack() ? newPosY == 0 : newPosY == 7)) {
+            chessBoard[posY][posX] = new Queen(chessBoard[posY][posX].getIsBlack());
+        }
+
+
         this.chessBoard[newPosY][newPosX] = this.chessBoard[posY][posX];
         this.chessBoard[posY][posX] = null;
     }

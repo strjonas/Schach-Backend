@@ -48,7 +48,8 @@ public class Pawn extends Pieces {
         return false;
     }
 
-    private boolean isSomethingInTheWay(int posY, int posX, int newPosY, int newPosX, Board board) {
+    @Override
+    boolean isSomethingInTheWay(int posY, int posX, int newPosY, int newPosX, Board board) {
         int stepY;
         if (getIsBlack()) {
             stepY = -1;
@@ -61,13 +62,13 @@ public class Pawn extends Pieces {
                 if (board.isEmpty(newPosY, newPosX)) {
                     posY += stepY;
                 } else {
-                    return false;
+                    return true;
                 }
             }
         } else if ((newPosY - posY) * stepY == 1 && Math.abs(newPosX - posX) == 1) {
-            return !board.isEmpty(newPosY, newPosX);
+            return !board.isEmpty(newPosY, newPosX) && board.getChessBoard()[newPosY][newPosX].getIsBlack() != isBlack;
         }
-        return false;
+        return true;
     }
 
     @Override

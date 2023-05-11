@@ -101,16 +101,19 @@ public class King extends Pieces {
         //check for Pawns and Bishops(and the Queen)
         while (i < 7) {
             if (!isBlack) {
-                if ((posY + i < 8 && posX + i < 8) && (posY + 1 == posY + i) &&
+
+                if ((posY + i < 8 && posX - i >= 0 && posX+i < 8) && (posY + 1 == posY + i) &&
                         ((board.getChessBoard()[posY + i][posX - 1] instanceof Pawn && board.getChessBoard()[posY + i][posX - 1].getIsBlack()) ||
-                                (board.getChessBoard()[posY + i][posX + 1] instanceof Pawn && board.getChessBoard()[posY + i][posX - 1].getIsBlack()))) {
+                                (board.getChessBoard()[posY + i][posX + 1] instanceof Pawn && board.getChessBoard()[posY + i][posX + 1].getIsBlack()))) {
                     return true;
                 }
             } else {
-                if ((posY - i >= 0 && posX - i >= 0) && (posY - 1 == posY - i) &&
-                        ((board.getChessBoard()[posY - i][posX - 1] instanceof Pawn && !board.getChessBoard()[posY - i][posX - 1].getIsBlack()) ||
-                                (board.getChessBoard()[posY - i][posX + 1] instanceof Pawn && !board.getChessBoard()[posY - i][posX - 1].getIsBlack()))) {
+                if ((posY - i >= 0 && posX - i >= 0 && posX+i < 8) && (posY - 1 == posY - i) &&
+                        ((board.getChessBoard()[posY - i][posX - 1] instanceof Pawn) && !board.getChessBoard()[posY - i][posX - 1].getIsBlack() ||
+                                (board.getChessBoard()[posY - i][posX + 1] instanceof Pawn) && !board.getChessBoard()[posY - i][posX + 1].getIsBlack())) {
                     return true;
+                    //TODO Not Nullpointer safe :,(
+                    // But weird e7e5 d7d5 works d7d5 e7e5 does not
                 }
             }
 
@@ -126,7 +129,7 @@ public class King extends Pieces {
             }
 
             if (!minusplus && (posY - i >= 0 && posX + i < 8) && board.getChessBoard()[posY - i][posX + i] != null) {
-                if ((isQueenOrBishop(posY - 1, posX - 1, board)
+                if ((isQueenOrBishop(posY - i, posX + i, board)
                         || (i == 1 && board.getChessBoard()[posY - i][posX + i] instanceof King))
                         && board.getChessBoard()[posY - i][posX + i].getIsBlack() != isBlack) {
                     return true;
@@ -136,7 +139,7 @@ public class King extends Pieces {
             }
 
             if (!plusminus && (posY + i < 8 && posX - i >= 0) && board.getChessBoard()[posY + i][posX - i] != null) {
-                if ((isQueenOrBishop(posY + 1, posX - 1, board)
+                if ((isQueenOrBishop(posY + i, posX - i, board)
                         || (i == 1 && board.getChessBoard()[posY + i][posX - i] instanceof King))
                         && board.getChessBoard()[posY + i][posX - i].getIsBlack() != isBlack) {
                     return true;
@@ -145,7 +148,7 @@ public class King extends Pieces {
                 }
             }
             if (!minusminus && (posY - i >= 0 && posX - i >= 0) && board.getChessBoard()[posY - i][posX - i] != null) {
-                if ((isQueenOrBishop(posY - 1, posX - 1, board)
+                if ((isQueenOrBishop(posY - i, posX - i, board)
                         || (i == 1 && board.getChessBoard()[posY - i][posX - i] instanceof King))
                         && board.getChessBoard()[posY - i][posX - i].getIsBlack() != isBlack) {
                     return true;

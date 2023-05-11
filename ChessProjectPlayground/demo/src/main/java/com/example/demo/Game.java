@@ -44,21 +44,20 @@ public class Game {
                 case 'f' -> finishedMove[i] = 5;
                 case 'g' -> finishedMove[i] = 6;
                 case 'h' -> finishedMove[i] = 7;
-                case '1', '2', '3', '4', '5', 6, '7', '8' -> finishedMove[i] =   Character.getNumericValue(moveArray[i])-1;
+                case '1', '2', '3', '4', '5', '6', '7', '8' -> finishedMove[i] =   Character.getNumericValue(moveArray[i])-1;
             }
 
         }
         return finishedMove;
         //Special treatment for Castling needed
     }
-    public void makeAMove(String move) {
+    public void makeAMove(String move) throws CloneNotSupportedException{
 
         int[] moveArray = convertChessNotationToMove(move);
         //.getnumericvalue?
 
         if (board.moveValidation(moveArray[1], moveArray[0], moveArray[3], moveArray[2])) {
                 board.moveAPiece(moveArray[1], moveArray[0],moveArray[3], moveArray[2]);
-
         }else{
             //ToDo return "move not valid" to the server
         }
