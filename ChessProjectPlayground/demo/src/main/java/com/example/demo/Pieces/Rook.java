@@ -4,11 +4,8 @@ import com.example.demo.Board;
 
 public class Rook extends Pieces {
 
-    private boolean hasMoved;
-
     public Rook(boolean black) {
         super(black);
-        hasMoved = false;
     }
 
     public static void main(String[] args) {
@@ -38,16 +35,6 @@ public class Rook extends Pieces {
         }
         return board.isEmpty(newPosY, newPosX) || board.getChessBoard()[newPosY][newPosX].getIsBlack() == !getIsBlack();
     }
-
-    public boolean getHasMoved() {
-        return hasMoved;
-    }
-
-    public void setHasMoved(boolean hasMoved) {
-        this.hasMoved = hasMoved;
-    }
-
-
 
     @Override
     public Character toChar() {

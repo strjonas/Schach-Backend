@@ -208,7 +208,17 @@ public class Board {
 
         //lose castle right to rook
         if (chessBoard[posY][posX] instanceof Rook && posX == 0 || posX == 7 && posY == 0 || posY == 7) {
-            //posY == 0 ? ( posX == 0  && ((King) chessBoard[posY][posX]).setCanCastleK(false) ? )
+            if (posY == 0) {
+                if (posX == 0)
+                    ((King) chessBoard[KING.y][KING.x]).setCanCastleQ(false);
+                else
+                    ((King) chessBoard[KING.y][KING.x]).setCanCastleK(false);
+            } else {
+                if (posX == 0)
+                    ((King) chessBoard[king.y][king.x]).setCanCastleQ(false);
+                else
+                    ((King) chessBoard[king.y][king.x]).setCanCastleK(false);
+            }
         }
 
         //promotion
