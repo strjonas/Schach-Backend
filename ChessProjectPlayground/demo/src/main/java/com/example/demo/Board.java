@@ -11,7 +11,7 @@ public class Board {
     private Pieces[][] chessBoard;
     private Point king;
     private Point KING;
-    private boolean whitesMove;
+    private boolean whitesMove = true;
     private Point enPassant;
     private int halfMoveCounter = 0;
     private int moveCounter = 0;
@@ -106,6 +106,28 @@ public class Board {
         this.king = king;
     }
 
+    public boolean isWhitesMove() {
+        return whitesMove;
+    }
+
+    public void setWhitesMove(boolean whitesMove) {
+        this.whitesMove = whitesMove;
+    }
+
+    public void toggleWhitesMove() {
+        setWhitesMove(!isWhitesMove());
+        if (whitesMove)
+            moveCounter++;
+    }
+
+    public Point getEnPassant() {
+        return enPassant;
+    }
+
+    public void setEnPassant(Point enPassant) {
+        this.enPassant = enPassant;
+    }
+
     public boolean isEmpty(int newPosY, int newPosX) {
         return chessBoard[newPosY][newPosX] == null;
     }
@@ -177,6 +199,8 @@ public class Board {
 
     public boolean moveValidation(int posY, int posX, int newPosY, int newPosX) throws CloneNotSupportedException {
         //altes piece
+        if(chessBoard[posY][posX].getIsBlack() == whitesMove)
+            return false;
         if(chessBoard[posY][posX].getIsBlack()){
             if (chessBoard[posY][posX].isMoveValid(posY,posX,newPosY,newPosX,this)) {
                 Board cpy = Board.copy(this);
@@ -223,9 +247,15 @@ public class Board {
             }
         }
 
-        //promotion
-        if (chessBoard[posY][posX] instanceof Pawn && (chessBoard[posY][posX].getIsBlack() ? newPosY == 0 : newPosY == 7)) {
-            chessBoard[posY][posX] = new Queen(chessBoard[posY][posX].getIsBlack());
+        //promotion, en pessant
+        if (chessBoard[posY][posX] instanceof Pawn) {
+            if (chessBoard[posY][posX].getIsBlack() ? newPosY == 0 : newPosY == 7) {
+                chessBoard[posY][posX] = new Queen(chessBoard[posY][posX].getIsBlack());
+            }
+            if (Math.abs(newPosY - posY) == 2)
+                setEnPassant(new Point(newPosX, newPosY));
+            if (newPosX - posX != 0 && isEmpty(newPosY, newPosX))
+                chessBoard[posY][newPosX] = null;
         }
 
 
