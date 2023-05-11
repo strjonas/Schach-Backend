@@ -181,7 +181,6 @@ public class Board {
             if (chessBoard[posY][posX].isMoveValid(posY,posX,newPosY,newPosX,this)) {
                 Board cpy = Board.copy(this);
                 cpy.moveAPiece(posY, posX, newPosY, newPosX);
-
                 return !((King) cpy.getChessBoard()[cpy.get_king().y][cpy.get_king().x]).isChecked(cpy.get_king().y, cpy.get_king().x, cpy);
             } else return false;
         }
@@ -195,8 +194,11 @@ public class Board {
 
     }
     public void moveAPiece(int posY, int posX, int newPosY, int newPosX){
-        //set new king position, lose castle right
+        //set new king position, lose castle right, move rook if castle
         if (chessBoard[posY][posX] instanceof King) {
+            if (Math.abs(newPosX - posX) == 2) {
+                moveAPiece(posY, (newPosX - posX > 0 ? 7 : 0), newPosY, newPosX - ((newPosX - posX) / 2));
+            }
             if (chessBoard[posY][posX].getIsBlack()) {
                 set_king(new Point(newPosX, newPosY));
             } else {
@@ -207,7 +209,7 @@ public class Board {
         }
 
         //lose castle right to rook
-        if (chessBoard[posY][posX] instanceof Rook && posX == 0 || posX == 7 && posY == 0 || posY == 7) {
+        if (chessBoard[posY][posX] instanceof Rook && (posX == 0 || posX == 7) && (posY == 0 || posY == 7)) {
             if (posY == 0) {
                 if (posX == 0)
                     ((King) chessBoard[KING.y][KING.x]).setCanCastleQ(false);
