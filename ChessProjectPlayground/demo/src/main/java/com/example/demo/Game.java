@@ -57,7 +57,9 @@ public class Game {
         //.getnumericvalue?
 
         if (board.moveValidation(moveArray[1], moveArray[0], moveArray[3], moveArray[2])) {
+                board.setEnPassant(null);
                 board.moveAPiece(moveArray[1], moveArray[0],moveArray[3], moveArray[2]);
+                board.toggleWhitesMove();
         }else{
             //ToDo return "move not valid" to the server
         }

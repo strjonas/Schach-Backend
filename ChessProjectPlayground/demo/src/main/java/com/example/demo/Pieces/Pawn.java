@@ -15,7 +15,12 @@ public class Pawn extends Pieces {
     }
 
     private boolean isPawnMovement(int posY, int posX, int newPosY, int newPosX, Board board) {
-        if (isBlack) {
+        if (posX == newPosX) {
+            return newPosY - posY == (isBlack ? -1 : 1) || (posY == (isBlack ? 6 : 1) && newPosY - posY == (isBlack ? -2 : 2));
+        } else if (Math.abs(newPosX - posX) == 1) {
+            return newPosY - posY == (isBlack ? -1 : 1);
+        } else return false;
+        /*if (isBlack) {
             if (posX == newPosX) {
                 switch (posY) {
                     case 6 -> {
@@ -45,12 +50,22 @@ public class Pawn extends Pieces {
             }
 
         }
-        return false;
+        return false;*/
     }
 
     @Override
     boolean isSomethingInTheWay(int posY, int posX, int newPosY, int newPosX, Board board) {
-        int stepY;
+        if (posX == newPosX) {
+            while (isBlack ? newPosY >= posY : newPosY <= posY) {
+                if (board.isEmpty(posY, posX)) {
+                    posY += ((newPosY - posY) / Math.abs(newPosY - posY));
+                } else return false;
+            }
+            return true;
+        } else {
+            return (!board.isEmpty(newPosY, newPosX) && board.getChessBoard()[newPosY][newPosX].getIsBlack() != isBlack) || (newPosX == board.getEnPassant().x && posY == board.getEnPassant().y && board.getChessBoard()[posY][newPosX].getIsBlack() != isBlack);
+        }
+        /*int stepY;
         if (getIsBlack()) {
             stepY = -1;
         } else {
@@ -68,7 +83,7 @@ public class Pawn extends Pieces {
         } else if ((newPosY - posY) * stepY == 1 && Math.abs(newPosX - posX) == 1) {
             return !board.isEmpty(newPosY, newPosX) && board.getChessBoard()[newPosY][newPosX].getIsBlack() != isBlack;
         }
-        return true;
+        return true;*/
     }
 
     @Override
