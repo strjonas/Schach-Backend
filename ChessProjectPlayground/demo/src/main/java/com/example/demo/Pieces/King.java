@@ -105,8 +105,7 @@ public class King extends Pieces {
             } else {
                 if ((posY - i >= 0 && posX - i >= 0 && posX + i < 8) && (posY - 1 == posY - i) && ((board.getChessBoard()[posY - i][posX - 1] instanceof Pawn) && !board.getChessBoard()[posY - i][posX - 1].getIsBlack() || (board.getChessBoard()[posY - i][posX + 1] instanceof Pawn) && !board.getChessBoard()[posY - i][posX + 1].getIsBlack())) {
                     return true;
-                    //TODO Not Nullpointer safe :,(
-                    // But weird e7e5 d7d5 works d7d5 e7e5 does not
+
                 }
             }
 

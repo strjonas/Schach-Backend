@@ -51,7 +51,7 @@ public class Game {
         return finishedMove;
         //Special treatment for Castling needed
     }
-    public void makeAMove(String move) throws CloneNotSupportedException{
+    public void makeAMove(String move) {
 
         int[] moveArray = convertChessNotationToMove(move);
         //.getnumericvalue?

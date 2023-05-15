@@ -163,11 +163,14 @@ public class Board {
             fenstring.append(y > 0 ? '/' : ' ');
         }
         fenstring.append(whitesMove ? "w " : "b ")
-                .append(((King) chessBoard[KING.y][KING.x]).isCanCastleQ() ?  "Q" : "")
+                .append(((King) chessBoard[KING.y][KING.x]).isCanCastleQ() ? "Q" : "")
                 .append(((King) chessBoard[king.y][king.x]).isCanCastleK() ? "k" : "")
                 .append(((King) chessBoard[king.y][king.x]).isCanCastleQ() ? "q" : "")
                 .append(enPassant != null ? " " + ((char) (enPassant.x + 'a')) + ((char) (enPassant.y + '1')) : " -")
-                .append(" " + halfMoveCounter + " " + moveCounter);
+                .append(" ")
+                .append(halfMoveCounter)
+                .append(" ")
+                .append(moveCounter);
         //fenstring = new StringBuilder((String) fenstring.subSequence(0, fenstring.length() - 1));
         //System.out.println(fenstring);
         return fenstring.toString();
@@ -197,7 +200,7 @@ public class Board {
     }
 
 
-    public boolean moveValidation(int posY, int posX, int newPosY, int newPosX) throws CloneNotSupportedException {
+    public boolean moveValidation(int posY, int posX, int newPosY, int newPosX) {
         //altes piece
         if(chessBoard[posY][posX].getIsBlack() == whitesMove)
             return false;
