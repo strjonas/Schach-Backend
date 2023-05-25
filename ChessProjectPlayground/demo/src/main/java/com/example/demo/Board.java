@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.Pieces.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static java.lang.Character.isUpperCase;
@@ -11,10 +12,11 @@ public class Board {
     private Pieces[][] chessBoard;
     private Point king;
     private Point KING;
-    private boolean whitesMove = true;
+    private boolean whitesMove;
     private Point enPassant;
     private int halfMoveCounter = 0;
     private int moveCounter = 0;
+    private ArrayList<String> history;
 
     public Board(Pieces[][] chessBoard) {
         this.chessBoard = chessBoard;
@@ -39,7 +41,9 @@ public class Board {
     public Board(String fenstring) {
         KING = new Point();
         king = new Point();
-        enPassant = new Point(4, 5);
+        history = new ArrayList<>();
+        whitesMove = true;
+        //enPassant = new Point(4, 5);
         //set enpassant position after pawnmove, set null after nextmove
         int y = 7;
         int x = 0;
@@ -74,12 +78,14 @@ public class Board {
             }
 
         }
-        for (int i = 0; i < 8; i++) {
+        /*for (int i = 0; i < 8; i++) {
             for (int b = 0; b < 8; b++) {
                 System.out.print(chessBoard[i][b]);
             }
             System.out.println();
         }
+
+         */
     }
 
     public Pieces[][] getChessBoard() {
@@ -123,6 +129,11 @@ public class Board {
     public Point getEnPassant() {
         return enPassant;
     }
+
+    public ArrayList<String> get_history() {
+        return history;
+    }
+
 
     public void setEnPassant(Point enPassant) {
         this.enPassant = enPassant;

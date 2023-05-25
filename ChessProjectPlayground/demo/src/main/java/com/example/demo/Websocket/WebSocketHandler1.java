@@ -6,6 +6,8 @@ import com.example.demo.Game;
 import com.example.demo.Pieces.Pieces;
 import org.springframework.web.socket.*;
 
+import java.io.IOException;
+
 public class WebSocketHandler1 implements WebSocketHandler {
 
     private Game game;
@@ -57,7 +59,7 @@ public class WebSocketHandler1 implements WebSocketHandler {
                 
                 
 
-            }
+            }*/
         }catch (Exception e){
             System.out.println(e);
         }

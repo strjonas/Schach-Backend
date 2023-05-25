@@ -37,15 +37,15 @@ public class Game {
 
         for (int i = 5; i < moveArray.length; i++) {
             switch (moveArray[i]) {
-                case 'a' -> finishedMove[i] = 0;
-                case 'b' -> finishedMove[i] = 1;
-                case 'c' -> finishedMove[i] = 2;
-                case 'd' -> finishedMove[i] = 3;
-                case 'e' -> finishedMove[i] = 4;
-                case 'f' -> finishedMove[i] = 5;
-                case 'g' -> finishedMove[i] = 6;
-                case 'h' -> finishedMove[i] = 7;
-                case '1', '2', '3', '4', '5', '6', '7', '8' -> finishedMove[i] =   Character.getNumericValue(moveArray[i])-1;
+                case 'a' -> finishedMove[i - 5] = 0;
+                case 'b' -> finishedMove[i - 5] = 1;
+                case 'c' -> finishedMove[i - 5] = 2;
+                case 'd' -> finishedMove[i - 5] = 3;
+                case 'e' -> finishedMove[i - 5] = 4;
+                case 'f' -> finishedMove[i - 5] = 5;
+                case 'g' -> finishedMove[i - 5] = 6;
+                case 'h' -> finishedMove[i - 5] = 7;
+                case '1', '2', '3', '4', '5', '6', '7', '8' -> finishedMove[i - 5] =   Character.getNumericValue(moveArray[i])-1;
             }
 
         }
