@@ -21,12 +21,41 @@ public class WebSocketHandler1 implements WebSocketHandler {
         System.out.println("Received message: " + msg);
 
         try{
-            System.out.println(msg.length());
-            if(msg.length() == 4 ){
-                System.out.println("HI");
-                game.makeAMove(msg);
-                String move = ChessEngine.analyse(game.getBoard().toFenString());
-                session.sendMessage(new TextMessage(move));
+            // move e2e4
+            // fen
+            // hist
+            if (msg.length() > 3) {
+                switch(msg.substring(0,4)) {
+                    case "move" -> {
+                        if(game.makeAMove(msg)){
+                            String move = ChessEngine.analyse(game.getBoard().toFenString());
+                            game.makeAMove(move);
+                            session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                        } else{
+                            session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                        }
+                    }
+                    case "fen "-> {
+                        session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                    }
+                    case "hist" -> {
+                        session.sendMessage(new TextMessage("hist " + String.join(",", game.getBoard().get_history())));
+                    }
+                    default -> throw new IOException("Not a correct modifier");
+                }
+            }
+
+            /*if(msg.strip().contains("move") ){
+                if(game.makeAMove(msg)){
+                    String move = ChessEngine.analyse(game.getBoard().toFenString());
+                    game.makeAMove(move);
+                    session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                }
+                else{
+                    session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                }
+                
+                
 
             }
         }catch (Exception e){

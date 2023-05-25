@@ -26,7 +26,7 @@ public class ChessEngine {
 
     ) {
         Runtime runTime = Runtime.getRuntime();
-        String executablePath = "C:\\Users\\jonas\\Downloads\\stockfish\\sf.exe";
+        String executablePath = "stockfish";
 
         try {
             this.process = runTime.exec(executablePath);
@@ -112,7 +112,7 @@ public class ChessEngine {
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
-        analyse("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+        System.out.println(analyse("r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4"));
     }
 }
 

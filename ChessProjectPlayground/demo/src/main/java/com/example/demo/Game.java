@@ -1,6 +1,7 @@
 package com.example.demo;
 
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class Game {
@@ -34,7 +35,7 @@ public class Game {
         int[] finishedMove = new int[4];
         char[] moveArray = move.toCharArray();
 
-        for (int i = 0; i < moveArray.length; i++) {
+        for (int i = 5; i < moveArray.length; i++) {
             switch (moveArray[i]) {
                 case 'a' -> finishedMove[i] = 0;
                 case 'b' -> finishedMove[i] = 1;
@@ -51,7 +52,7 @@ public class Game {
         return finishedMove;
         //Special treatment for Castling needed
     }
-    public void makeAMove(String move) {
+    public boolean makeAMove(String move) {
 
         int[] moveArray = convertChessNotationToMove(move);
         //.getnumericvalue?
@@ -60,9 +61,10 @@ public class Game {
                 board.setEnPassant(null);
                 board.moveAPiece(moveArray[1], moveArray[0],moveArray[3], moveArray[2]);
                 board.toggleWhitesMove();
-        }else{
-            //ToDo return "move not valid" to the server
+                board.get_history().add(move);
+                return true;
         }
+        return false;
 
 
 
@@ -74,8 +76,7 @@ public class Game {
 
     public static void main(String[] args) {
         Game game = new Game();
-        System.out.println(game.board.getChessBoard()[0][0].getIsBlack());
-        System.out.println(game.convertChessNotationToMove("e2e4"));
+        System.out.println(Arrays.toString(game.convertChessNotationToMove("move e2e4")));
     }
 
 }
