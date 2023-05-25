@@ -26,7 +26,7 @@ public class ChessEngine {
 
     ) {
         Runtime runTime = Runtime.getRuntime();
-        String executablePath = "stockfish";
+        String executablePath = "C:\\Users\\jonas\\Downloads\\stockfish\\sf.exe";
 
         try {
             this.process = runTime.exec(executablePath);

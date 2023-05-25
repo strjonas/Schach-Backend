@@ -30,7 +30,7 @@ public class Game {
     }
 
 
-    private int[] convertChessNotationToMove(String move) {
+    public int[] convertChessNotationToMove(String move) {
         int[] finishedMove = new int[4];
         char[] moveArray = move.toCharArray();
 
