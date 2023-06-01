@@ -232,6 +232,7 @@ public class Board {
 
     }
     public void moveAPiece(int posY, int posX, int newPosY, int newPosX){
+        System.out.println("" + posY + posX +  newPosY + newPosX);
         //set new king position, lose castle right, move rook if castle
         if (chessBoard[posY][posX] instanceof King) {
             if (Math.abs(newPosX - posX) == 2) {
@@ -275,6 +276,7 @@ public class Board {
 
         this.chessBoard[newPosY][newPosX] = this.chessBoard[posY][posX];
         this.chessBoard[posY][posX] = null;
+
+        System.out.println("ln279 " + this.toFenString());
     }
 }
-

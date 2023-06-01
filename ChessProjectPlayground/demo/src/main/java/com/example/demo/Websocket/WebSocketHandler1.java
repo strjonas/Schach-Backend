@@ -6,7 +6,7 @@ import com.example.demo.Game;
 import com.example.demo.Pieces.Pieces;
 import org.springframework.web.socket.*;
 
-import java.io.IOException;
+import java.util.Objects;
 
 public class WebSocketHandler1 implements WebSocketHandler {
 
@@ -18,55 +18,58 @@ public class WebSocketHandler1 implements WebSocketHandler {
     }
 
     @Override
-    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
+    public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) {
         String msg = message.getPayload().toString();
+        /*System.out.println("Received message: " + msg);
+        System.out.println(msg.substring(0,4));
         System.out.println("Received message: " + msg);
          */
 
         try{
+            session.sendMessage(new TextMessage("Echo: " + msg));
             // move e2e4
             // fen
             // hist
-            if (msg.length() > 3) {
-                switch(msg.substring(0,4)) {
-                    case "move" -> {
-                        if(game.makeAMove(msg)){
-                            String move = ChessEngine.analyse(game.getBoard().toFenString());
+            switch (msg.substring(0, 4)) {
+
+                case "move" -> {
+                    if (game.makeAMove(msg)) {
+                        String move ="move " + ChessEngine.analyse(game.getBoard().toFenString());
+                        System.out.println(move);
+                        if (move.contains("none")) {
+                            session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                            session.sendMessage(new TextMessage("end  " + (game.getBoard().isWhitesMove() ? "b" : "w")));
+                        } else {
                             game.makeAMove(move);
-                            session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
-                        } else{
-                            session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                            if (ChessEngine.analyse(game.getBoard().toFenString()).contains("none")) {
+                                session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                                session.sendMessage(new TextMessage("end  " + (game.getBoard().isWhitesMove() ? "b" : "w")));
+                            } else {
+                                System.out.println(game.getBoard().toFenString());
+                                session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                            }
                         }
-                    }
-                    case "fen "-> {
+
+                    } else {
                         session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
                     }
-                    case "hist" -> {
-                        session.sendMessage(new TextMessage("hist " + String.join(",", game.getBoard().get_history())));
-                    }
-                    default -> throw new IOException("Not a correct modifier");
                 }
+                case "fen " -> {
+                    session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
+                }
+                case "hist" -> {
+                    session.sendMessage(new TextMessage("hist " + String.join(",", game.getBoard().get_history())));
+                }
+                default -> session.sendMessage(new TextMessage("Echo: " + msg));
             }
 
-            /*if(msg.strip().contains("move") ){
-                if(game.makeAMove(msg)){
-                    String move = ChessEngine.analyse(game.getBoard().toFenString());
-                    game.makeAMove(move);
-                    session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
-                }
-                else{
-                    session.sendMessage(new TextMessage("fen  " + game.getBoard().toFenString()));
-                }
-                
-                
-
-            }*/
         }catch (Exception e){
             System.out.println(e);
         }
 
-        session.sendMessage(new TextMessage("Echo: " + msg));
+
     }
+
 
 
     @Override

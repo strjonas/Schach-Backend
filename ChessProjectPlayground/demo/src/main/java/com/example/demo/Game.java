@@ -58,11 +58,11 @@ public class Game {
         //.getnumericvalue?
 
         if (board.moveValidation(moveArray[1], moveArray[0], moveArray[3], moveArray[2])) {
-                board.setEnPassant(null);
-                board.moveAPiece(moveArray[1], moveArray[0],moveArray[3], moveArray[2]);
-                board.toggleWhitesMove();
-                board.get_history().add(move);
-                return true;
+            board.setEnPassant(null);
+            board.moveAPiece(moveArray[1], moveArray[0],moveArray[3], moveArray[2]);
+            board.toggleWhitesMove();
+            board.get_history().add(move.substring(5));
+            return true;
         }
         return false;
 
@@ -80,7 +80,6 @@ public class Game {
     }
 
 }
-
 
 
 
