@@ -21,6 +21,7 @@ public class WebSocketHandler1 implements WebSocketHandler {
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         String msg = message.getPayload().toString();
         System.out.println("Received message: " + msg);
+         */
 
         try{
             // move e2e4
