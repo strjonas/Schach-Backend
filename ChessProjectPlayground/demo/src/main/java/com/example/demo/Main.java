@@ -1,8 +1,11 @@
 package com.example.demo;
 
 import com.example.demo.Pieces.Pawn;
+import com.example.demo.Websocket.ChessEngine;
 
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 import static com.example.demo.FenstringToBoard.boardBuilder;
 import static java.lang.Character.isUpperCase;
@@ -11,6 +14,7 @@ import static java.lang.Character.isUpperCase;
 public class Main {
 
     public static void commandLineTestGame() throws CloneNotSupportedException {
+
         Scanner scanner = new Scanner(System.in);
         Game testGame = new Game();
         while(true){
@@ -18,6 +22,19 @@ public class Main {
             String move = scanner.nextLine();
             testGame.makeAMove(move);
             boardBuilder(testGame.getBoard().toFenStringSimple());
+            String test = testGame.getBoard().toFenString();
+            try {
+                String engineMove = ChessEngine.analyse(test);
+                testGame.makeAMove("move " +engineMove);
+                boardBuilder(testGame.getBoard().toFenStringSimple());
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (TimeoutException e) {
+                throw new RuntimeException(e);
+            }
+
         }
     }
     public static void main(String[] args) throws CloneNotSupportedException {
