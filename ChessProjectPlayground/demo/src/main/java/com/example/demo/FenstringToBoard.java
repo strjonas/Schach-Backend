@@ -12,7 +12,7 @@ public class FenstringToBoard {
             switch (character) {
                 case '8', '7', '6', '5', '4', '3', '2', '1' -> {
                     for (int i = 0; i < Character.getNumericValue(character); i++) {
-                        chessBoard[column][line++] = 'e';
+                        chessBoard[column][line++] = '.';
                     }
                 }
                 case 'R', 'r', 'K', 'k', 'Q', 'q', 'B', 'b', 'N', 'n', 'P', 'p' -> chessBoard[column][line++] = character;
@@ -25,7 +25,7 @@ public class FenstringToBoard {
         }
             for(int i = 0; i<8;i++){
                 for(int b = 0; b<8;b++){
-                    System.out.print(chessBoard[i][b]);
+                    System.out.print(chessBoard[i][b] +" ");
                 }
                 System.out.println();
             }
